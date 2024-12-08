@@ -2,6 +2,7 @@
   "expo": {
     "name": "rn-memory-mate",
     "slug": "rn-memory-mate",
+    "newArchEnabled": true,
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -13,7 +14,8 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.kaarlmoroti.memorymate"
     },
     "android": {
       "adaptiveIcon": {
@@ -22,10 +24,16 @@
       }
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "50bd2fd5-2e6b-4f64-91e6-ec1617d55194"
+      }
     }
   }
 }
