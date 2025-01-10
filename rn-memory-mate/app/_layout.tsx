@@ -7,8 +7,9 @@ import 'react-native-reanimated';
 
 
 import {useColorScheme} from '@/components/useColorScheme';
-import {MD3DarkTheme, MD3LightTheme, PaperProvider} from "react-native-paper";
+import {MD3DarkTheme, MD3LightTheme, PaperProvider, useTheme} from "react-native-paper";
 import {defaultDarkTheme, defaultLightTheme} from "@/constants/Colors";
+import {StyleProp, ViewStyle} from "react-native";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -61,11 +62,22 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
+  const theme = useTheme()
+
+  const headerStyle: StyleProp<{ backgroundColor?: string | undefined }> = {
+    backgroundColor: theme.colors.background
+  }
+
   return (
     <Stack>
       <Stack.Screen name="index" options={{headerShown: false}}/>
-      <Stack.Screen name="login" options={{headerBackTitle:"Back"}}/>
-      <Stack.Screen name="register"/>
+      <Stack.Screen name="login" options={{
+        headerBackTitle: "Back",
+        headerTitle: "Login",
+        headerStyle,
+        headerTintColor: theme.colors.primary,
+      }}/>
+      <Stack.Screen name="register" options={{headerBackTitle: "Back", headerTitle: "Register", headerStyle, headerTintColor: theme.colors.primary}}/>
       <Stack.Screen name="(tabs)" options={{headerShown: false}}/>
       <Stack.Screen name="modal" options={{presentation: 'modal'}}/>
     </Stack>

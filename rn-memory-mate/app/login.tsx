@@ -1,5 +1,5 @@
 import {SafeAreaView} from "react-native-safe-area-context";
-import {Alert, StyleSheet, View} from "react-native";
+import {Alert, KeyboardAvoidingView, StyleSheet, View} from "react-native";
 import {Button, TextInput, useTheme} from "react-native-paper";
 import {Spacings} from "@/constants/Spacings";
 import {Image} from "expo-image";
@@ -33,11 +33,10 @@ export default function login() {
 
   return (
     <SafeAreaView style={[styles.container, {backgroundColor: theme.colors.background}]}>
-      <Spacer height={Spacings["4x"]}/>
-      <Image source={require('../assets/icons/book.svg')} style={styles.icon}/>
+      <Image source={require('../assets/icons/book.svg')} style={styles.icon} tintColor={theme.colors.onBackground}/>
 
       <Spacer height={Spacings["3x"]}/>
-      <TextInput label="Email" mode={'outlined'} value={email} onChangeText={setEmail}/>
+      <TextInput label="Email" mode={'outlined'} value={email} onChangeText={setEmail} placeholder={"some@example.com"}/>
 
       <Spacer height={Spacings["2x"]}/>
       <TextInput label="Password" mode={'outlined'} secureTextEntry={true} value={password} onChangeText={setPassword}/>

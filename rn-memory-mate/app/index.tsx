@@ -4,17 +4,19 @@ import {Image} from "expo-image";
 import {Spacings} from "@/constants/Spacings";
 import {Button, Text, useTheme} from "react-native-paper";
 import {useRouter} from "expo-router";
+import Spacer from "@/components/Spacer";
 
 export default function index() {
   const theme = useTheme();
   const router = useRouter();
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, {backgroundColor: theme.colors.background}]}>
       <Image source={require('../assets/images/login-flat.jpg')} style={styles.flatLogo}/>
+      <Spacer height={Spacings["1x"]}/>
       <View style={styles.textContainer}>
         <View style={styles.titleContainer}>
-          <Image source={require('../assets/icons/book.svg')} style={styles.bookIcon}/>
+          <Image source={require('../assets/icons/book.svg')} style={styles.bookIcon} tintColor={theme.colors.onSurface}/>
           <Text variant={"titleLarge"}>Memory Mate</Text>
         </View>
         <View>
@@ -31,7 +33,7 @@ export default function index() {
           Login
         </Button>
         <Button mode={'outlined'} onPress={() => {
-          console.log("register")
+          router.navigate('./register')
         }}>
           Register
         </Button>
@@ -63,7 +65,8 @@ const styles = StyleSheet.create({
   },
   flatLogo: {
     width: "100%",
-    aspectRatio: 1
+    aspectRatio: 1,
+    borderRadius: Spacings["2x"]
   },
   buttonContainer: {
     gap: Spacings["2x"]
