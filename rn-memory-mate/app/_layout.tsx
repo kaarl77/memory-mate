@@ -79,7 +79,7 @@ function RootLayoutNav() {
       }}/>
       <Stack.Screen name="register" options={{headerBackTitle: "Back", headerTitle: "Register", headerStyle, headerTintColor: theme.colors.primary}}/>
       <Stack.Screen name="(tabs)" options={{headerShown: false}}/>
-      <Stack.Screen name="modal" options={{presentation: 'modal'}}/>
+      <Stack.Screen name="chat" options={{presentation: 'modal', headerTitle: "Assistant chat", headerTintColor: theme.colors.primary, headerStyle}}/>
     </Stack>
   );
 }

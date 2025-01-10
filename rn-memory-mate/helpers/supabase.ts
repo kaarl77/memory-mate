@@ -12,3 +12,10 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     detectSessionInUrl: false,
   },
 })
+
+export type JournalEntry = {
+  title?: string
+  content?: string
+  created_at?: string
+  updated_at?: string
+}
