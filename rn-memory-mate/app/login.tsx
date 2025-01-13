@@ -36,7 +36,7 @@ export default function login() {
       <Image source={require('../assets/icons/book.svg')} style={styles.icon} tintColor={theme.colors.onBackground}/>
 
       <Spacer height={Spacings["3x"]}/>
-      <TextInput label="Email" mode={'outlined'} value={email} onChangeText={setEmail} placeholder={"some@example.com"}/>
+      <TextInput label="Email" mode={'outlined'} value={email} onChangeText={setEmail} placeholder={"some@example.com"} autoCapitalize={'none'}/>
 
       <Spacer height={Spacings["2x"]}/>
       <TextInput label="Password" mode={'outlined'} secureTextEntry={true} value={password} onChangeText={setPassword}/>

@@ -14,8 +14,35 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 })
 
 export type JournalEntry = {
+  id?: string,
   title?: string
   content?: string
   created_at?: string
   updated_at?: string
+}
+
+export type Reminder = {
+  title?: string
+  description?: string
+  due_date?: string
+}
+
+export function getYesterdaysLatestEntry(user_id: string){
+  return supabase
+    .from('entries')
+    .select('content, title, created_at, updated_at')
+    .eq('user_id', user_id)
+    .lte('created_at', new Date().toISOString())
+    .order('created_at', {ascending: false})
+    .limit(1)
+}
+
+export function getUpcomingReminders(user_id: string){
+  return supabase
+    .from('os_reminders')
+    .select('description, title, due_date')
+    .eq('user_id', user_id)
+    .gte('due_date', new Date().toISOString())
+    .order('created_at', {ascending: true})
+    .limit(2)
 }
