@@ -47,8 +47,9 @@ export default function TabOneScreen() {
   return (
     <View style={containerStyle}>
       <ScrollView>
+        <Spacer height={Spacings["3x"]}/>
         <Text variant={"headlineSmall"}>Yesterday’s highlight</Text>
-        <Text variant={"titleLarge"} style={{color: theme.colors.backdrop}}>Check what happened yesterday</Text>
+        <Text variant={"titleLarge"} style={{color: theme.colors.outline}}>Check what happened yesterday</Text>
         <Spacer height={Spacings["3x"]}/>
 
         <Card mode={"contained"}>
@@ -65,7 +66,7 @@ export default function TabOneScreen() {
         <View style={separatorStyle}/>
         <Spacer height={Spacings["3x"]}/>
         <Text variant={"headlineSmall"}>Upcoming reminders</Text>
-        <Text variant={"titleLarge"} style={{color: theme.colors.backdrop}}>Check what is planned next</Text>
+        <Text variant={"titleLarge"} style={{color: theme.colors.outline}}>Check what is planned next</Text>
 
         <Spacer height={Spacings["3x"]}/>
 
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: Spacings["3x"],
-    paddingVertical: Spacings["3x"],
+    paddingBottom: Spacings["3x"],
   },
   fab: {
     position: 'absolute',

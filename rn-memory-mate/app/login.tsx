@@ -26,7 +26,7 @@ export default function login() {
     if (error) {
       Alert.alert(error.message)
     } else {
-      router.navigate('./(tabs)/two')
+      router.navigate('./(tabs)')
     }
     setLoading(false)
   }

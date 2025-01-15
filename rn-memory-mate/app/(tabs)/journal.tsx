@@ -8,6 +8,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import {useRouter} from "expo-router";
 import {useIsFocused} from "@react-navigation/core";
 import Spacer from "@/components/Spacer";
+import {Screen} from "react-native-screens";
 
 export default function journal() {
   const [loading, setLoading] = useState(true)
@@ -97,7 +98,6 @@ export default function journal() {
         throw error
       }
       if (data) {
-        console.log("data", data)
         setJournalEntries(data)
       }
     } catch (error) {
