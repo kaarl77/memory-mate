@@ -25,7 +25,14 @@
     },
     "plugins": [
       "expo-router",
-      "expo-font"
+      "expo-font",
+      [
+        "expo-calendar",
+        {
+          "calendarPermission": "Allow MemoryMate to access your calendar",
+          "remindersPermission": "Allow MemoryMate to access your reminders"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
