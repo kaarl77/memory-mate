@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {createClient} from '@supabase/supabase-js'
 import {Database} from "@/database.types";
+import { Alert } from 'react-native';
 
 const supabaseUrl = 'https://poofwlhyknkodkyteeqv.supabase.co'
 const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvb2Z3bGh5a25rb2RreXRlZXF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE1MjM0MzEsImV4cCI6MjA0NzA5OTQzMX0.6va_5OXeedgZAIneWQ2KqtpGocAypdV7cDxB3Kwbbn8'
@@ -48,4 +49,97 @@ export function getUpcomingReminders(user_id: string){
     .gte('due_date', new Date().toISOString())
     .order('created_at', {ascending: true})
     .limit(2)
+}
+
+// Reminder-specific Supabase functions
+export async function getUserReminders(userId: string): Promise<Reminder[] | null> {
+  try {
+    if (!userId) throw new Error('No user ID provided');
+
+    const {data, error, status} = await supabase
+      .from("os_reminders")
+      .select("id, title, description, due_date, created_at")
+      .eq("user_id", userId);
+
+    if (error && status !== 406) {
+      throw error;
+    }
+
+    return data || [];
+  } catch (error) {
+    console.log("Error fetching reminders:", error);
+    if (error instanceof Error) {
+      Alert.alert(error.message);
+    }
+    return [];
+  }
+}
+
+export async function deleteUserReminder(reminderId: string, userId: string): Promise<boolean> {
+  try {
+    const { error } = await supabase
+      .from("os_reminders")
+      .delete()
+      .eq("id", reminderId)
+      .eq("user_id", userId);
+      
+    if (error) throw error;
+    return true;
+  } catch (e) {
+    console.log("Error deleting reminder:", e);
+    if (e instanceof Error) {
+      Alert.alert(e.message);
+    }
+    return false;
+  }
+}
+
+export async function createUserReminder(reminder: Reminder, userId: string): Promise<Reminder | null> {
+  try {
+    const { data, error } = await supabase
+      .from('os_reminders')
+      .insert([
+        {
+          "user_id": userId,
+          title: reminder.title,
+          description: reminder.description,
+          due_date: reminder.due_date
+        }
+      ])
+      .select();
+      
+    if (error) throw error;
+    return data?.[0] || null;
+  } catch (error) {
+    console.error('Error creating reminder:', error);
+    if (error instanceof Error) {
+      Alert.alert(error.message);
+    }
+    return null;
+  }
+}
+
+export async function updateUserReminder(reminder: Reminder, userId: string): Promise<boolean> {
+  try {
+    if (!reminder.id) throw new Error('No reminder ID provided');
+    
+    const { error } = await supabase
+      .from('os_reminders')
+      .update({
+        title: reminder.title,
+        description: reminder.description,
+        due_date: reminder.due_date,
+      })
+      .eq('id', reminder.id)
+      .eq('user_id', userId);
+    
+    if (error) throw error;
+    return true;
+  } catch (error) {
+    console.error('Error updating reminder:', error);
+    if (error instanceof Error) {
+      Alert.alert(error.message);
+    }
+    return false;
+  }
 }
