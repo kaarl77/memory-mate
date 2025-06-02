@@ -1,12 +1,13 @@
-import { Platform, StyleSheet, View } from 'react-native'
-import { TextInput, useTheme } from 'react-native-paper'
-import { Bubble, GiftedChat, IMessage } from 'react-native-gifted-chat'
-import { useCallback, useEffect, useState } from 'react'
-import { Spacings } from '@/constants/Spacings'
+import {Platform, ScrollView, StyleSheet, View} from 'react-native'
+import {Button, TextInput, useTheme, Text, IconButton} from 'react-native-paper'
+import {Bubble, GiftedChat, IMessage} from 'react-native-gifted-chat'
+import {useCallback, useEffect, useState} from 'react'
+import {Spacings} from '@/constants/Spacings'
 import OpenAI from 'openai'
-import { getCalendarReminderFromMessage, getOpenAIAgent } from '@/helpers/openai_agent'
+import {getCalendarReminderFromMessage, getOpenAIAgent} from '@/helpers/openai_agent'
 import * as Calendar from 'expo-calendar'
 import {useReminders} from "@/helpers/use-reminders";
+import {ExpoSpeechRecognitionModule, useSpeechRecognitionEvent} from "expo-speech-recognition";
 
 
 export default function ModalScreen() {
@@ -19,6 +20,34 @@ export default function ModalScreen() {
 
   const {appRemindersId} = useReminders()
 
+  const [recognizing, setRecognizing] = useState(false);
+  const [transcript, setTranscript] = useState("");
+
+  useSpeechRecognitionEvent("start", () => setRecognizing(true));
+  useSpeechRecognitionEvent("end", () => setRecognizing(false));
+  useSpeechRecognitionEvent("result", (event) => {
+    setTranscript(event.results[0]?.transcript);
+    setTextInputContent(event.results[0]?.transcript)
+  });
+  useSpeechRecognitionEvent("error", (event) => {
+    console.log("error code:", event.error, "error message:", event.message);
+  });
+
+  const handleStart = async () => {
+    const result = await ExpoSpeechRecognitionModule.requestPermissionsAsync();
+    if (!result.granted) {
+      console.warn("Permissions not granted", result);
+      return;
+    }
+    // Start speech recognition
+    ExpoSpeechRecognitionModule.start({
+      lang: "ro-RO",
+      interimResults: true,
+      continuous: false,
+      addsPunctuation: true
+    });
+  };
+
   useEffect(() => {
     getOpenAIAgent().then((agent) => {
       setOpenai(agent)
@@ -26,7 +55,7 @@ export default function ModalScreen() {
     setMessages([
       {
         _id: 1,
-        text: 'Hello developer',
+        text: `Hi there! How can I help you with? I'm happy to help you manage your calendar!`,
         createdAt: new Date(),
         user: {
           _id: 2,
@@ -44,11 +73,26 @@ export default function ModalScreen() {
   }, [])
 
   return (
-    <View style={{ flex: 1, paddingBottom: Spacings['4x'], backgroundColor: theme.colors.background }}>
+    <View style={{flex: 1, paddingBottom: Spacings['4x'], backgroundColor: theme.colors.background}}>
+      <View style={styles.microphoneContainer}>
+        <IconButton
+          icon={recognizing ? 'microphone' : 'microphone-outline'}
+          size={30}
+          mode={recognizing ? 'contained' : 'outlined'}
+          iconColor={recognizing ? theme.colors.onPrimary : theme.colors.primary}
+          containerColor={recognizing ? theme.colors.primary : 'transparent'}
+          onPress={recognizing ? () => ExpoSpeechRecognitionModule.stop() : handleStart}
+          animated={true}
+        />
+      </View>
+
       <GiftedChat
         messages={messages}
         user={{
           _id: 1
+        }}
+        messagesContainerStyle={{
+          paddingVertical: Spacings["2x"]
         }}
         renderBubble={(props) => {
           return (
@@ -64,11 +108,11 @@ export default function ModalScreen() {
               }}
               wrapperStyle={{
                 left: {
-                  backgroundColor: theme.colors.onBackground
+                  backgroundColor: theme.colors.onBackground,
                 },
                 right: {
                   backgroundColor: theme.colors.primary
-                }
+                },
               }}
             />
           )
@@ -79,11 +123,11 @@ export default function ModalScreen() {
             <TextInput
               placeholder={'Type a message...'}
               autoCapitalize={'none'}
-              outlineStyle={{ borderRadius: 999 }}
+              outlineStyle={{borderRadius: 999}}
               value={textInputContent}
               onChangeText={setTextInputContent}
               mode={'outlined'}
-              style={{ marginHorizontal: 24, height: Spacings['4x'] }}
+              style={{marginHorizontal: 24, height: Spacings['4x']}}
               spellCheck={true}
               right={
                 <TextInput.Icon
@@ -158,5 +202,10 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: '80%'
+  },
+  microphoneContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: Spacings["1x"],
   }
 })

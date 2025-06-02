@@ -81,6 +81,8 @@ function RootLayoutNav() {
       <Stack.Screen name="(tabs)" options={{headerShown: false}}/>
       <Stack.Screen name="chat" options={{presentation: 'modal', headerTitle: "Assistant chat", headerTintColor: theme.colors.primary, headerStyle}}/>
       <Stack.Screen name={"editJournalEntry"} options={{headerTitle: "Edit Journal Entry", headerTintColor: theme.colors.primary, headerStyle, headerBackTitle:"Back"}}/>
+      <Stack.Screen name={'editReminder'} options={{headerTitle: "Edit Reminder", headerTintColor: theme.colors.primary, headerStyle, headerBackTitle:"Back"}}/>
+      <Stack.Screen name={"editProfile"} options={{headerTitle: "Edit Profile", headerTintColor: theme.colors.primary, headerStyle, headerBackTitle:"Back"}}/>
     </Stack>
   );
 }

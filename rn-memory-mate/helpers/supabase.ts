@@ -24,11 +24,11 @@ export type JournalEntry = {
 }
 
 export type Reminder = {
-  id?: string
-  title?: string
-  description?: string
-  due_date?: string
-  created_at?: string
+  id?: string | null
+  title?: string | null
+  description?: string | null
+  due_date?: string | null
+  created_at?: string | null
 }
 
 export function getYesterdaysLatestEntry(user_id: string){
@@ -52,9 +52,13 @@ export function getUpcomingReminders(user_id: string){
 }
 
 // Reminder-specific Supabase functions
-export async function getUserReminders(userId: string): Promise<Reminder[] | null> {
+export async function getUserReminders(userId: string): Promise<Reminder[]> {
   try {
-    if (!userId) throw new Error('No user ID provided');
+    if (!userId) {
+      console.log("Error: No user ID provided");
+      Alert.alert('No user ID provided');
+      return [];
+    }
 
     const {data, error, status} = await supabase
       .from("os_reminders")
@@ -62,7 +66,9 @@ export async function getUserReminders(userId: string): Promise<Reminder[] | nul
       .eq("user_id", userId);
 
     if (error && status !== 406) {
-      throw error;
+      console.log("Error fetching reminders:", error);
+      Alert.alert(error.message);
+      return [];
     }
 
     return data || [];
@@ -83,7 +89,12 @@ export async function deleteUserReminder(reminderId: string, userId: string): Pr
       .eq("id", reminderId)
       .eq("user_id", userId);
       
-    if (error) throw error;
+    if (error) {
+      console.log("Error deleting reminder:", error);
+      Alert.alert(error.message);
+      return false;
+    }
+    
     return true;
   } catch (e) {
     console.log("Error deleting reminder:", e);
@@ -108,7 +119,12 @@ export async function createUserReminder(reminder: Reminder, userId: string): Pr
       ])
       .select();
       
-    if (error) throw error;
+    if (error) {
+      console.error('Error creating reminder:', error);
+      Alert.alert(error.message);
+      return null;
+    }
+    
     return data?.[0] || null;
   } catch (error) {
     console.error('Error creating reminder:', error);
@@ -121,7 +137,11 @@ export async function createUserReminder(reminder: Reminder, userId: string): Pr
 
 export async function updateUserReminder(reminder: Reminder, userId: string): Promise<boolean> {
   try {
-    if (!reminder.id) throw new Error('No reminder ID provided');
+    if (!reminder.id) {
+      console.error('Error: No reminder ID provided');
+      Alert.alert('No reminder ID provided');
+      return false;
+    }
     
     const { error } = await supabase
       .from('os_reminders')
@@ -133,7 +153,12 @@ export async function updateUserReminder(reminder: Reminder, userId: string): Pr
       .eq('id', reminder.id)
       .eq('user_id', userId);
     
-    if (error) throw error;
+    if (error) {
+      console.error('Error updating reminder:', error);
+      Alert.alert(error.message);
+      return false;
+    }
+    
     return true;
   } catch (error) {
     console.error('Error updating reminder:', error);

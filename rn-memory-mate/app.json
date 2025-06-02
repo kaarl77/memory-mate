@@ -39,7 +39,8 @@
           "calendarPermission": "Allow MemoryMate to access your calendar",
           "remindersPermission": "Allow MemoryMate to access your reminders"
         }
-      ]
+      ],
+      "expo-speech-recognition"
     ],
     "experiments": {
       "typedRoutes": true
