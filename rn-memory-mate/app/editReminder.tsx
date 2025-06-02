@@ -4,7 +4,7 @@ import Spacer from "@/components/Spacer";
 import {Spacings} from "@/constants/Spacings";
 import {useEffect, useState} from "react";
 import {Reminder, createUserReminder, updateUserReminder, supabase} from "@/helpers/supabase";
-import {router, useLocalSearchParams} from "expo-router";
+import {router, useLocalSearchParams, useNavigation} from "expo-router";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Calendar from 'expo-calendar';
 import {
@@ -27,10 +27,15 @@ export default function EditReminder() {
   const [dueDate, setDueDate] = useState<Date>(paramReminder?.due_date ? new Date(paramReminder.due_date) : new Date());
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
   const [userId, setUserId] = useState<string>('');
+  const navigation = useNavigation()
 
   const {appRemindersId} = useReminders()
 
   useEffect(() => {
+    navigation.setOptions({
+      headerTitle: paramReminder?.id ? `Edit Reminder` : `New Reminder`
+    })
+
     supabase.auth.getSession().then(({data: {session}}) => {
       if (session?.user.id) {
         setUserId(session?.user.id);

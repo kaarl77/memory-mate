@@ -4,7 +4,7 @@ import Spacer from "@/components/Spacer";
 import {Spacings} from "@/constants/Spacings";
 import {useEffect, useState} from "react";
 import {JournalEntry, supabase} from "@/helpers/supabase";
-import {router, useLocalSearchParams} from "expo-router";
+import {router, useLocalSearchParams, useNavigation} from "expo-router";
 
 export default function editJournalEntry() {
   const theme = useTheme()
@@ -16,8 +16,13 @@ export default function editJournalEntry() {
   const [entryTitle, setEntryTitle] = useState<string>(paramJournalEntry?.title ??'')
   const [entryContent, setEntryContent] = useState<string>(paramJournalEntry?.content ?? '')
   const [userId, setUserId] = useState<string>('')
+  const navigation = useNavigation()
 
   useEffect(() => {
+    navigation.setOptions({
+      headerTitle: paramJournalEntry?.id ? 'Edit Journal Entry' : 'New Journal Entry',
+    })
+
     supabase.auth.getSession().then(({data: {session}}) => {
       if (session?.user.id) {
         setUserId(session?.user.id)
