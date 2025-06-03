@@ -57,6 +57,9 @@ export default function ModalScreen() {
         _id: 1,
         text: `Hi there! How can I help you with? I'm happy to help you manage your calendar!`,
         createdAt: new Date(),
+        pending: false,
+        sent: true,
+        received: true,
         user: {
           _id: 2,
           name: 'Memory Mate'
@@ -67,9 +70,19 @@ export default function ModalScreen() {
 
 
   const onSend = useCallback((message: IMessage) => {
+    // Add the message with pending status
+    const pendingMessage: IMessage = {
+      ...message,
+      pending: true,
+      sent: false,
+      received: false
+    }
+    
     setMessages(previousMessages =>
-      GiftedChat.append(previousMessages, [message])
+      GiftedChat.append(previousMessages, [pendingMessage])
     )
+    
+    return pendingMessage
   }, [])
 
   return (
@@ -95,6 +108,26 @@ export default function ModalScreen() {
           paddingVertical: Spacings["2x"]
         }}
         renderBubble={(props) => {
+          // Get the message status
+          const message = props.currentMessage;
+          
+          // Define styles based on status
+          const getRightBubbleStyle = () => {
+            if (message?.pending) {
+              return {
+                backgroundColor: theme.colors.primary + '80', // 50% opacity for pending
+              };
+            } else if (!message?.sent) {
+              return {
+                backgroundColor: theme.colors.error, // Error state
+              };
+            } else {
+              return {
+                backgroundColor: theme.colors.primary, // Sent state
+              };
+            }
+          };
+          
           return (
             <Bubble
               {...props}
@@ -110,9 +143,7 @@ export default function ModalScreen() {
                 left: {
                   backgroundColor: theme.colors.onBackground,
                 },
-                right: {
-                  backgroundColor: theme.colors.primary
-                },
+                right: getRightBubbleStyle(),
               }}
             />
           )
@@ -135,6 +166,8 @@ export default function ModalScreen() {
                   size={Spacings['2x']}
                   color={theme.colors.primary}
                   onPress={() => {
+                    if (!textInputContent.trim()) return;
+                    
                     const message: IMessage = {
                       _id: messages.length + 1,
                       text: textInputContent,
@@ -144,25 +177,57 @@ export default function ModalScreen() {
                         name: 'user'
                       }
                     }
-                    onSend(message)
-                    setTextInputContent('')
-                    getCalendarReminderFromMessage(openai, message).then((response) => {
-                      console.log(response)
+                    
+                    // Send message with pending status
+                    const pendingMessage = onSend(message);
+                    setTextInputContent('');
+                    
+                    // Process the message
+                    getCalendarReminderFromMessage(openai, pendingMessage).then((response) => {
+                      console.log(response);
+                      
                       if (appRemindersId && isReminderObject(response?.reminder)) {
+                        // Create the reminder
                         Calendar.createReminderAsync(appRemindersId, {
                           title: response?.reminder.title,
                           startDate: new Date(response?.reminder.startDate ?? ''),
                           notes: response?.reminder.notes,
                           dueDate: new Date(response?.reminder.dueDate ?? '')
-
                         }).then((value) => {
-                          console.log(value)
+                          console.log(value);
+                          
+                          // Update message status to sent
+                          setMessages(previousMessages => 
+                            previousMessages.map(msg => 
+                              msg._id === pendingMessage._id 
+                                ? { ...msg, pending: false, sent: true, received: true } 
+                                : msg
+                            )
+                          );
                         })
-                          .catch((error) => {
-                            console.error(error)
-                          })
+                        .catch((error) => {
+                          console.error(error);
+                          
+                          // Update message status to error (not sent)
+                          setMessages(previousMessages => 
+                            previousMessages.map(msg => 
+                              msg._id === pendingMessage._id 
+                                ? { ...msg, pending: false, sent: false } 
+                                : msg
+                            )
+                          );
+                        });
+                      } else {
+                        // If no reminder was created, still mark as sent
+                        setMessages(previousMessages => 
+                          previousMessages.map(msg => 
+                            msg._id === pendingMessage._id 
+                              ? { ...msg, pending: false, sent: true, received: true } 
+                              : msg
+                          )
+                        );
                       }
-                    })
+                    });
                   }}
                 />
               }
