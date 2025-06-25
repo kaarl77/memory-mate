@@ -197,7 +197,7 @@ The components in Memory Mate interact through well-defined patterns to ensure m
 
 1. **Authentication Flow**
    ```
-   User → Authentication UI → Auth Service → Supabase Auth → Database
+   Utilizator → Interfață autentificare → Modul autentificare → Supabase → Baza de date
      ↑                                           |
      └───────────────────────────────────────────┘
                      (JWT Token)
@@ -209,10 +209,10 @@ The components in Memory Mate interact through well-defined patterns to ensure m
 
 2. **Journal Entry Management**
    ```
-   User → Journal UI → Journal Service → Data Service → Supabase DB
-     ↑          ↓           ↓               ↓
-     └──────────┴───────────┴───────────────┘
-                     (Data Flow)
+   Utilizator → Interfața jurnal → Modul jurnal → Supabase → Baza de date
+     ↑          ↓           ↓                         ↓
+     └──────────┴───────────┴─────────────────────────┘
+                     (Flux de date)
    ```
    - User creates or edits entries through the UI
    - Journal service processes and validates the data
@@ -222,13 +222,13 @@ The components in Memory Mate interact through well-defined patterns to ensure m
 
 3. **Reminder Creation and Integration**
    ```
-   User → Reminder UI → Reminder Service → Data Service → Supabase DB
-     ↑          |            |                              ↑
-     |          ↓            ↓                              |
-     |     Device Calendar ← Calendar Service               |
-     |          |                                           |
-     └──────────┴───────────────────────────────────────────┘
-                     (Bidirectional Sync)
+   Utilizator → Interfața Reminder → Modul Reminder → Baza de date
+     ↑               |                     |                   ↑
+     |               ↓                     ↓                   |
+     |          Calendar Dispozitiv ← Modul Calendar           |
+     |               |                                         |
+     └───────────────┴─────────────────────────────────────────┘
+                     (Proces de sincronizare)
    ```
    - User creates reminders through the UI
    - Reminder service processes the data

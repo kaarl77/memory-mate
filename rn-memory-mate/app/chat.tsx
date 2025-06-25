@@ -1,4 +1,4 @@
-import {Platform, ScrollView, StyleSheet, View} from 'react-native'
+import {Alert, Platform, ScrollView, StyleSheet, View} from 'react-native'
 import {Button, TextInput, useTheme, Text, IconButton} from 'react-native-paper'
 import {Bubble, GiftedChat, IMessage} from 'react-native-gifted-chat'
 import {useCallback, useEffect, useState} from 'react'
@@ -8,12 +8,14 @@ import {getCalendarReminderFromMessage, getOpenAIAgent} from '@/helpers/openai_a
 import * as Calendar from 'expo-calendar'
 import {useReminders} from "@/helpers/use-reminders";
 import {ExpoSpeechRecognitionModule, useSpeechRecognitionEvent} from "expo-speech-recognition";
+import {createUserReminder, supabase} from "@/helpers/supabase";
 
 
 export default function ModalScreen() {
   const theme = useTheme()
 
   const [openai, setOpenai] = useState<OpenAI>()
+  const [userId, setUserId] = useState<string>('')
 
   const [messages, setMessages] = useState<IMessage[]>([])
   const [textInputContent, setTextInputContent] = useState<string>('')
@@ -22,6 +24,14 @@ export default function ModalScreen() {
 
   const [recognizing, setRecognizing] = useState(false);
   const [transcript, setTranscript] = useState("");
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({data: {session}}) => {
+      if (session?.user.id) {
+        setUserId(session?.user.id);
+      }
+    });
+  }, []);
 
   useSpeechRecognitionEvent("start", () => setRecognizing(true));
   useSpeechRecognitionEvent("end", () => setRecognizing(false));
@@ -188,22 +198,42 @@ export default function ModalScreen() {
                       
                       if (appRemindersId && isReminderObject(response?.reminder)) {
                         // Create the reminder
+                        createUserReminder({
+                          title: response?.reminder.title,
+                          description: response?.reminder.notes,
+                          due_date: response?.reminder.dueDate,
+                        }, userId)
+
                         Calendar.createReminderAsync(appRemindersId, {
                           title: response?.reminder.title,
                           startDate: new Date(response?.reminder.startDate ?? ''),
                           notes: response?.reminder.notes,
                           dueDate: new Date(response?.reminder.dueDate ?? '')
-                        }).then((value) => {
+                        }
+                        ).then((value) => {
                           console.log(value);
-                          
+
+
                           // Update message status to sent
-                          setMessages(previousMessages => 
-                            previousMessages.map(msg => 
-                              msg._id === pendingMessage._id 
-                                ? { ...msg, pending: false, sent: true, received: true } 
+                          setMessages(previousMessages =>
+                            previousMessages.map(msg =>
+                              msg._id === pendingMessage._id
+                                ? { ...msg, pending: false, sent: true, received: true }
                                 : msg
                             )
                           );
+
+                          setMessages(previousMessages =>
+                            GiftedChat.append(previousMessages, [{
+                              _id: messages.length + 2,
+                              text: `I've added this reminder to your calendar.`,
+                              createdAt: new Date(),
+                              user: {
+                                _id: 2,
+                                name: 'Memory Mate'
+                              }
+                            }])
+                          )
                         })
                         .catch((error) => {
                           console.error(error);

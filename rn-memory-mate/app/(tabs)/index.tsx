@@ -48,8 +48,8 @@ export default function TabOneScreen() {
     <View style={containerStyle}>
       <ScrollView>
         <Spacer height={Spacings["3x"]}/>
-        <Text variant={"headlineSmall"}>Yesterday’s highlight</Text>
-        <Text variant={"titleLarge"} style={{color: theme.colors.outline}}>Check what happened yesterday</Text>
+        <Text variant={"headlineSmall"}>Latest highlight</Text>
+        <Text variant={"titleLarge"} style={{color: theme.colors.outline}}>Check your latest journal entry</Text>
         <Spacer height={Spacings["3x"]}/>
 
         <Card mode={"contained"}>
