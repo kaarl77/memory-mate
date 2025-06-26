@@ -16,11 +16,11 @@ export default function login() {
   const [password, setPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
-  async function signInWithEmail() {
+  async function signInWithEmail(forceEmail?: string, forcePassword?: string) {
     setLoading(true)
     const {error} = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
+      email: forceEmail?? email,
+      password: forcePassword?? password,
     })
 
     if (error) {
@@ -46,6 +46,9 @@ export default function login() {
           mode={'contained'}
           onPress={() => {
             signInWithEmail()
+          }}
+          onLongPress={() => {
+            signInWithEmail('kaarlmoroti@gmail.com', 'testtest')
           }}
           loading={loading}
         >

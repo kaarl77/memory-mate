@@ -74,9 +74,9 @@ Memory Mate follows a client-server architecture with a mobile-first approach, l
    - Personalized assistance based on user preferences
 
 4. **Native Device Integration**
-   - Calendar and reminders integration
+   - Calendar and index integration
    - Local storage for offline capabilities
-   - Push notifications for reminders
+   - Push notifications for index
 
 ### Architectural Patterns
 
@@ -124,7 +124,7 @@ Memory Mate is organized into logical components that encapsulate specific funct
      - Entry synchronization with backend
 
 3. **Reminder Module**
-   - **Purpose**: Allows users to set and manage reminders
+   - **Purpose**: Allows users to set and manage index
    - **Responsibilities**:
      - Reminder creation and management
      - Integration with device calendar
@@ -230,7 +230,7 @@ The components in Memory Mate interact through well-defined patterns to ensure m
      └───────────────┴─────────────────────────────────────────┘
                      (Proces de sincronizare)
    ```
-   - User creates reminders through the UI
+   - User creates index through the UI
    - Reminder service processes the data
    - Calendar service integrates with device calendar
    - Data is stored in both the database and device calendar
@@ -250,7 +250,7 @@ The components in Memory Mate interact through well-defined patterns to ensure m
    - User sends messages through the chat UI
    - Chat service processes the conversation
    - OpenAI service communicates with the API
-   - Extracted reminders are processed by the reminder service
+   - Extracted index are processed by the reminder service
    - Conversation history is stored in the database
    - UI is updated with responses and actions
 
@@ -314,9 +314,9 @@ Memory Mate addresses several key use cases for people with Alzheimer's and thei
 
 2. **Reminder Management**
    - **Actor**: User or caregiver
-   - **Goal**: Set reminders for important tasks or medications
+   - **Goal**: Set index for important tasks or medications
    - **Flow**:
-     1. User navigates to the reminders section
+     1. User navigates to the index section
      2. User creates a new reminder with title, description, and due date
      3. System saves the reminder and schedules a notification
      4. System integrates with device calendar
@@ -329,21 +329,21 @@ Memory Mate addresses several key use cases for people with Alzheimer's and thei
    - **Flow**:
      1. User navigates to the chat section
      2. User asks about past activities or upcoming events
-     3. System retrieves relevant journal entries or reminders
+     3. System retrieves relevant journal entries or index
      4. AI assistant provides a natural language response
      5. User can ask follow-up questions for more details
    - **Outcome**: User receives assistance recalling important information
 
 4. **Automatic Reminder Creation**
    - **Actor**: User with memory impairment
-   - **Goal**: Create reminders through natural conversation
+   - **Goal**: Create index through natural conversation
    - **Flow**:
      1. User navigates to the chat section
      2. User mentions an upcoming task or appointment in conversation
      3. AI assistant recognizes the intent and extracts details
      4. System suggests creating a reminder with the extracted information
      5. User confirms, and the system creates the reminder
-   - **Outcome**: User creates reminders through natural interaction
+   - **Outcome**: User creates index through natural interaction
 
 ### Secondary Use Cases
 
@@ -382,8 +382,8 @@ Memory Mate addresses several key use cases for people with Alzheimer's and thei
    - **Goal**: Help manage the user's schedule and memories
    - **Flow**:
      1. Caregiver accesses the user's account (with permission)
-     2. Caregiver reviews or adds journal entries and reminders
-     3. Caregiver sets up important reminders
+     2. Caregiver reviews or adds journal entries and index
+     3. Caregiver sets up important index
      4. System maintains all changes for the user
    - **Outcome**: Caregiver provides support for memory management
 

@@ -55,7 +55,7 @@ export function useReminders() {
       setIsAppRemindersInitialised(isAppRemindersInitialised)
     })()
       .catch((error) => {
-        console.error('Error initialising app calendar and reminders:', error)
+        console.error('Error initialising app calendar and index:', error)
       })
   }, []);
 

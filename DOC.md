@@ -17,8 +17,8 @@ Memory Mate is a journaling application powered by AI, specifically designed for
 Memory Mate's business logic is built around three primary features:
 
 1. **Journal Entries**: Allows users to create, view, edit, and delete journal entries to document their daily activities and memories.
-2. **Reminders**: Enables users to set and manage reminders for important events, medications, or activities.
-3. **AI Assistant**: Provides an AI-powered chat interface that helps users extract meaningful information from their conversations and automatically create reminders.
+2. **Reminders**: Enables users to set and manage index for important events, medications, or activities.
+3. **AI Assistant**: Provides an AI-powered chat interface that helps users extract meaningful information from their conversations and automatically create index.
 
 ### Data Model
 
@@ -35,7 +35,7 @@ The application uses Supabase as its backend service with the following database
    - Fields: id, title, content, created_at, updated_at, user_id (foreign key to profiles)
 
 3. **os_reminders**
-   - Stores reminders
+   - Stores index
    - Fields: id, title, description, due_date, created_at, user_id (foreign key to profiles)
 
 4. **chat_messages**
@@ -60,7 +60,7 @@ The application uses Supabase as its backend service with the following database
 
 ### Reminder System
 
-The reminder system integrates with the device's native calendar and reminders:
+The reminder system integrates with the device's native calendar and index:
 
 1. **Cross-Platform Compatibility**: 
    - iOS: Full integration with the native Reminders app
@@ -133,7 +133,7 @@ The app uses Expo Router for navigation with a tab-based main interface:
 2. **Tab Structure**:
    - Home: Dashboard with summary information
    - Journal: List and management of journal entries
-   - Reminders: List and management of reminders
+   - Reminders: List and management of index
    - Profile: User settings and information
 
 3. **Screen Transitions**:
@@ -150,7 +150,7 @@ The app uses Expo Router for navigation with a tab-based main interface:
    - Helper text for form validation and guidance
 
 2. **Lists and Cards**:
-   - Card-based presentation for journal entries and reminders
+   - Card-based presentation for journal entries and index
    - List views with consistent styling
    - Swipe actions for quick operations
 

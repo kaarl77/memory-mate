@@ -66,7 +66,7 @@ export async function createOSReminder(
 ): Promise<string | undefined> {
   try {
     if (Platform.OS !== 'ios') {
-      console.log('OS reminders are only supported on iOS');
+      console.log('OS index are only supported on iOS');
       return undefined;
     }
 
@@ -112,14 +112,14 @@ export async function syncRemindersFromOS(userId: string): Promise<void> {
     const reminders = await Calendar.getRemindersAsync([reminderCalendarId ?? ""], ReminderStatus.INCOMPLETE, dateLastWeek, dateNextWeek)
 
     if (!reminders || reminders.length === 0) {
-      console.log("no reminders to sync")
+      console.log("no index to sync")
       return
     }
 
 
-    console.log('Synced reminders from OS');
+    console.log('Synced index from OS');
   } catch (error) {
-    console.error('Error syncing reminders from OS:', error);
+    console.error('Error syncing index from OS:', error);
   }
 }
 

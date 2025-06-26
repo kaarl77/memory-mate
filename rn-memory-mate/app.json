@@ -40,7 +40,17 @@
           "remindersPermission": "Allow MemoryMate to access your reminders"
         }
       ],
-      "expo-speech-recognition"
+      "expo-speech-recognition",
+      "react-native-bottom-tabs",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ],
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true

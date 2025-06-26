@@ -18,7 +18,7 @@
 
 Memory Mate is a specialized journaling application designed specifically for individuals with Alzheimer's disease and other memory impairments. The core purpose of the application is to help users log and remember their daily activities and important memories, thereby enhancing their quality of life and supporting cognitive function.
 
-The application serves as a digital memory aid that combines traditional journaling with modern AI capabilities to create a comprehensive memory support system. By providing an intuitive platform for recording experiences and automatically generating reminders, Memory Mate aims to reduce the cognitive burden on users while helping them maintain independence and connection to their personal history.
+The application serves as a digital memory aid that combines traditional journaling with modern AI capabilities to create a comprehensive memory support system. By providing an intuitive platform for recording experiences and automatically generating index, Memory Mate aims to reduce the cognitive burden on users while helping them maintain independence and connection to their personal history.
 
 ### 3.1.2 User Requirements
 
@@ -189,11 +189,11 @@ The technology stack for Memory Mate was carefully selected to address the speci
 1. **Natural Language Processing**: OpenAI's advanced language models provide:
    - Sophisticated understanding of natural language for conversational interfaces
    - Context-aware responses that can adapt to the user's cognitive state
-   - Ability to extract structured information (like reminders) from unstructured text
+   - Ability to extract structured information (like index) from unstructured text
    - Personalization capabilities based on user history and preferences
 
 2. **Reminder Extraction**: The AI capabilities enable:
-   - Automatic identification of potential reminders in conversation
+   - Automatic identification of potential index in conversation
    - Extraction of relevant details (time, date, activity) from casual mentions
    - Conversion of unstructured requests into structured reminder data
    - Reduction of cognitive load by eliminating manual reminder creation steps
@@ -255,7 +255,7 @@ Understanding the diverse stakeholders involved in Memory Mate is crucial for ad
    - **Success Metrics**: Improved daily functioning, reduced anxiety, increased independence
 
 2. **Caregivers**
-   - **Needs**: Oversight capabilities, collaboration tools, reliable reminders
+   - **Needs**: Oversight capabilities, collaboration tools, reliable index
    - **Concerns**: User adoption, data accuracy, appropriate access levels
    - **Success Metrics**: Reduced caregiver burden, improved care coordination
 

@@ -1,55 +1,55 @@
 import React from 'react';
-import {Tabs} from 'expo-router';
-import {useClientOnlyValue} from '@/components/useClientOnlyValue';
-import {useTheme} from "react-native-paper";
-import Ionicons from '@expo/vector-icons/Ionicons';
+import {withLayoutContext} from 'expo-router';
+import {
+  createNativeBottomTabNavigator,
+  NativeBottomTabNavigationOptions,
+  NativeBottomTabNavigationEventMap,
+} from '@bottom-tabs/react-navigation';
+import {ParamListBase, TabNavigationState} from '@react-navigation/native';
+import GestureHandlerRootView from "expo-dev-menu/mocks/react-native-gesture-handler/src";
+
+const BottomTabNavigator = createNativeBottomTabNavigator().Navigator;
+
+const Tabs = withLayoutContext<
+  NativeBottomTabNavigationOptions,
+  typeof BottomTabNavigator,
+  TabNavigationState<ParamListBase>,
+  NativeBottomTabNavigationEventMap
+>(BottomTabNavigator);
 
 export default function TabLayout() {
-
-  const theme = useTheme()
-
   return (
-    <Tabs
-      screenOptions={{
-        animation: "shift",
-        tabBarActiveTintColor: theme.colors.primary,
-        tabBarStyle: {
-          backgroundColor: theme.colors.background,
-        },
-        headerShown: useClientOnlyValue(false, true),
-        headerTintColor: theme.colors.primary,
-        headerStyle: {
-          backgroundColor: theme.colors.background,
-        },
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({color}) => <Ionicons name={"home"} color={color} size={24}/>,
-        }}
-      />
-      <Tabs.Screen
-        name="journal"
-        options={{
-          title: 'Journal',
-          tabBarIcon: ({color}) => <Ionicons name={"journal"} color={color} size={24}/>,
-        }}
-      />
-      <Tabs.Screen
-        name={"reminders"}
-        options={{
-          title: 'Reminders',
-          tabBarIcon: ({color}) => <Ionicons name={"calendar"} color={color} size={24}/>,
-        }}
-      />
-      <Tabs.Screen
-        name={"profile"}
-        options={{
-          title: 'Profile',
-          tabBarIcon: ({color}) => <Ionicons name={"person"} color={color} size={24}/>,
-        }}
-      />
-    </Tabs>
+    <>
+      <Tabs>
+        <Tabs.Screen
+          name="index"
+          options={{
+            title: 'Home',
+            tabBarIcon: ({}) => require('../../assets/icons/home-outline.svg'),
+          }}
+        />
+        <Tabs.Screen
+          name="journal"
+          options={{
+            title: 'Journal',
+            tabBarIcon: ({}) => require('../../assets/icons/journal-outline.svg'),
+          }}
+        />
+        <Tabs.Screen
+          name={"reminders"}
+          options={{
+            title: 'Reminders',
+            tabBarIcon: ({}) => require('../../assets/icons/calendar-outline.svg'),
+          }}
+        />
+        <Tabs.Screen
+          name={"profile"}
+          options={{
+            title: 'Profile',
+            tabBarIcon: ({}) => require('../../assets/icons/person-outline.svg'),
+          }}
+        />
+      </Tabs>
+    </>
   );
 }

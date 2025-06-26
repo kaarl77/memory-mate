@@ -9,7 +9,10 @@ import 'react-native-reanimated';
 import {useColorScheme} from '@/components/useColorScheme';
 import {MD3DarkTheme, MD3LightTheme, PaperProvider, useTheme} from "react-native-paper";
 import {defaultDarkTheme, defaultLightTheme} from "@/constants/Colors";
-import {StyleProp, ViewStyle} from "react-native";
+import {Platform, StyleProp, ViewStyle} from "react-native";
+import {StatusBar} from "expo-status-bar";
+import {DarkTheme, DefaultTheme, ThemeProvider} from "@react-navigation/native";
+import GestureHandlerRootView from "expo-dev-menu/mocks/react-native-gesture-handler/src";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -55,9 +58,16 @@ export default function RootLayout() {
 
 
   return (
-    <PaperProvider theme={paperTheme}>
-      <RootLayoutNav/>
-    </PaperProvider>
+    // <PaperProvider theme={paperTheme}>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        {Platform.OS === "ios" ? (
+          <StatusBar style="auto" translucent={false} animated={true}/>
+        ) : (
+          <StatusBar style="auto" backgroundColor={paperTheme.colors.background} translucent={false}/>
+        )}
+        <RootLayoutNav/>
+      </ThemeProvider>
+    // </PaperProvider>
   )
 }
 
@@ -69,6 +79,7 @@ function RootLayoutNav() {
   }
 
   return (
+    // <GestureHandlerRootView>
     <Stack>
       <Stack.Screen name="index" options={{headerShown: false}}/>
       <Stack.Screen name="login" options={{
@@ -77,12 +88,38 @@ function RootLayoutNav() {
         headerStyle,
         headerTintColor: theme.colors.primary,
       }}/>
-      <Stack.Screen name="register" options={{headerBackTitle: "Back", headerTitle: "Register", headerStyle, headerTintColor: theme.colors.primary}}/>
+      <Stack.Screen name="register" options={{
+        headerBackTitle: "Back",
+        headerTitle: "Register",
+        headerStyle,
+        headerTintColor: theme.colors.primary
+      }}/>
       <Stack.Screen name="(tabs)" options={{headerShown: false}}/>
-      <Stack.Screen name="chat" options={{presentation: 'modal', headerTitle: "Assistant chat", headerTintColor: theme.colors.primary, headerStyle}}/>
-      <Stack.Screen name={"editJournalEntry"} options={{headerTitle: "Edit Journal Entry", headerTintColor: theme.colors.primary, headerStyle, headerBackTitle:"Back"}}/>
-      <Stack.Screen name={'editReminder'} options={{headerTitle: "Edit Reminder", headerTintColor: theme.colors.primary, headerStyle, headerBackTitle:"Back"}}/>
-      <Stack.Screen name={"editProfile"} options={{headerTitle: "Edit Profile", headerTintColor: theme.colors.primary, headerStyle, headerBackTitle:"Back"}}/>
+      <Stack.Screen name="chat" options={{
+        presentation: 'modal',
+        headerTitle: "Assistant chat",
+        headerTintColor: theme.colors.primary,
+        headerStyle
+      }}/>
+      <Stack.Screen name={"editJournalEntry"} options={{
+        headerTitle: "Edit Journal Entry",
+        headerTintColor: theme.colors.primary,
+        headerStyle,
+        headerBackTitle: "Back"
+      }}/>
+      <Stack.Screen name={'editReminder'} options={{
+        headerTitle: "Edit Reminder",
+        headerTintColor: theme.colors.primary,
+        headerStyle,
+        headerBackTitle: "Back"
+      }}/>
+      <Stack.Screen name={"editProfile"} options={{
+        headerTitle: "Edit Profile",
+        headerTintColor: theme.colors.primary,
+        headerStyle,
+        headerBackTitle: "Back"
+      }}/>
     </Stack>
+    // {/*</GestureHandlerRootView>*/}
   );
 }

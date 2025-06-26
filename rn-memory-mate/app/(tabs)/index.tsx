@@ -9,6 +9,7 @@ import {getUpcomingReminders, getYesterdaysLatestEntry, JournalEntry, Reminder, 
 import Spacer from "@/components/Spacer";
 import {getCardSubtitle} from "@/app/(tabs)/journal";
 import {useIsFocused} from "@react-navigation/core";
+import {SafeAreaView} from "react-native-safe-area-context";
 
 export default function TabOneScreen() {
   const router = useRouter()
@@ -33,11 +34,6 @@ export default function TabOneScreen() {
     })
   }, [isFocused])
 
-  const containerStyle: ViewStyle = {
-    ...styles.container,
-    backgroundColor: theme.colors.background,
-  }
-
   const separatorStyle: ViewStyle = {
     height: 1,
     width: '100%',
@@ -45,8 +41,13 @@ export default function TabOneScreen() {
   }
 
   return (
-    <View style={containerStyle}>
-      <ScrollView>
+    <View style={{backgroundColor: theme.colors.background}}>
+      <ScrollView style={styles.container} automaticallyAdjustKeyboardInsets={true}>
+        <SafeAreaView>
+          <View style={{
+            flexDirection:"column",
+            height:"100%"
+          }}>
         <Spacer height={Spacings["3x"]}/>
         <Text variant={"headlineSmall"}>Latest highlight</Text>
         <Text variant={"titleLarge"} style={{color: theme.colors.outline}}>Check your latest journal entry</Text>
@@ -71,7 +72,7 @@ export default function TabOneScreen() {
         <Spacer height={Spacings["3x"]}/>
 
         {upcomingReminders.map((reminder, index) => (
-          <Card key={index} style={{marginHorizontal:2}}>
+          <Card key={index} style={{marginHorizontal: 2}}>
             <Card.Title
               title={reminder.title}
               subtitle={reminder.description}
@@ -83,6 +84,9 @@ export default function TabOneScreen() {
             </Card.Content>
           </Card>
         ))}
+          </View>
+        </SafeAreaView>
+
       </ScrollView>
       <FAB
         icon={() => <Ionicons name={"chatbubbles-outline"} size={Spacings["3x"]} color={theme.colors.primary}/>}
@@ -98,7 +102,8 @@ export default function TabOneScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
+    minHeight:"100%",
     paddingHorizontal: Spacings["3x"],
     paddingBottom: Spacings["3x"],
   },
@@ -106,6 +111,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     margin: Spacings["3x"],
     right: 0,
-    bottom: 0,
+    bottom: 80,
   }
 });

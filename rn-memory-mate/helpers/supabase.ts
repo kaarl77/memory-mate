@@ -66,14 +66,14 @@ export async function getUserReminders(userId: string): Promise<Reminder[]> {
       .eq("user_id", userId);
 
     if (error && status !== 406) {
-      console.log("Error fetching reminders:", error);
+      console.log("Error fetching index:", error);
       Alert.alert(error.message);
       return [];
     }
 
     return data || [];
   } catch (error) {
-    console.log("Error fetching reminders:", error);
+    console.log("Error fetching index:", error);
     if (error instanceof Error) {
       Alert.alert(error.message);
     }
