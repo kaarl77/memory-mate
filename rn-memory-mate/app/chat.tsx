@@ -208,7 +208,7 @@ export default function ModalScreen() {
                           title: response?.reminder.title,
                           startDate: new Date(response?.reminder.startDate ?? ''),
                           notes: response?.reminder.notes,
-                          dueDate: new Date(response?.reminder.dueDate ?? '')
+                          dueDate: new Date(response?.reminder.startDate ?? '')
                         }
                         ).then((value) => {
                           console.log(value);
