@@ -1,5 +1,5 @@
 import {SafeAreaView} from "react-native-safe-area-context";
-import {Alert, KeyboardAvoidingView, StyleSheet, View} from "react-native";
+import {Alert, KeyboardAvoidingView, NativeModules, StyleSheet, View} from "react-native";
 import {Button, TextInput, useTheme} from "react-native-paper";
 import {Spacings} from "@/constants/Spacings";
 import {Image} from "expo-image";
@@ -7,6 +7,7 @@ import Spacer from "@/components/Spacer";
 import {useState} from "react";
 import {supabase} from "@/helpers/supabase";
 import {useRouter} from "expo-router";
+import Container from "@/components/Container";
 
 export default function login() {
   const theme = useTheme();

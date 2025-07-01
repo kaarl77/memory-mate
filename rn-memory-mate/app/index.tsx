@@ -5,13 +5,16 @@ import {Spacings} from "@/constants/Spacings";
 import {Button, Text, useTheme} from "react-native-paper";
 import {useRouter} from "expo-router";
 import Spacer from "@/components/Spacer";
+import Container from "@/components/Container";
+import {StatusBar} from "expo-status-bar";
 
 export default function index() {
   const theme = useTheme();
   const router = useRouter();
 
   return (
-    <SafeAreaView style={[styles.container, {backgroundColor: theme.colors.background}]}>
+    <Container style={styles.container}>
+      <Spacer height={150}/>
       <Image source={require('../assets/images/login-flat.jpg')} style={styles.flatLogo}/>
       <Spacer height={Spacings["1x"]}/>
       <View style={styles.textContainer}>
@@ -38,14 +41,15 @@ export default function index() {
           Register
         </Button>
       </View>
+      <StatusBar networkActivityIndicatorVisible={false} style={'auto'}/>
 
-    </SafeAreaView>
+    </Container>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: 'white',
     paddingHorizontal: Spacings["3x"]
   },

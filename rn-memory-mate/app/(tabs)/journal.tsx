@@ -37,7 +37,6 @@ export default function journal() {
 
   return (
     <View style={[styles.container, {backgroundColor: theme.colors.background}]}>
-      <Spacer height={Spacings["3x"]}/>
       <FlatList
         contentContainerStyle={{gap: Spacings["1x"]}}
         data={journalEntries}

@@ -1,19 +1,22 @@
 import {Stack} from "expo-router/stack";
-import GestureHandlerRootView from "expo-dev-menu/mocks/react-native-gesture-handler/src";
+import {useTheme} from "react-native-paper";
 
 export default function TabLayout() {
+  const theme = useTheme()
+
   return (
-    <GestureHandlerRootView>
-      <Stack>
-        <Stack.Screen name={'index'} options={{
-          headerShown: true,
-          headerLargeTitle: true,
-          headerBlurEffect: "systemChromeMaterial",
-          headerTransparent: true,
-          headerTitle: "Reminders",
-        }}
-        />
-      </Stack>
-    </GestureHandlerRootView>
+    <Stack screenOptions={{}}>
+      <Stack.Screen name={'index'} options={{
+        headerShown: true,
+        headerLargeTitle:true,
+        headerStyle:{
+          backgroundColor:"yellow"
+        }
+
+        // headerLargeTitle: true,
+        // animationMatchesGesture:true
+      }}
+      />
+    </Stack>
   )
 }

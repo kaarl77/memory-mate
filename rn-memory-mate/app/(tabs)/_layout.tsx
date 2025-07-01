@@ -6,7 +6,6 @@ import {
   NativeBottomTabNavigationEventMap,
 } from '@bottom-tabs/react-navigation';
 import {ParamListBase, TabNavigationState} from '@react-navigation/native';
-import GestureHandlerRootView from "expo-dev-menu/mocks/react-native-gesture-handler/src";
 
 const BottomTabNavigator = createNativeBottomTabNavigator().Navigator;
 
@@ -19,7 +18,6 @@ const Tabs = withLayoutContext<
 
 export default function TabLayout() {
   return (
-    <>
       <Tabs>
         <Tabs.Screen
           name="index"
@@ -50,6 +48,5 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
-    </>
   );
 }

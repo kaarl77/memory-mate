@@ -1,6 +1,5 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import {useFonts} from 'expo-font';
-import {Stack} from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import {useEffect} from 'react';
 import 'react-native-reanimated';
@@ -13,6 +12,7 @@ import {Platform, StyleProp, ViewStyle} from "react-native";
 import {StatusBar} from "expo-status-bar";
 import {DarkTheme, DefaultTheme, ThemeProvider} from "@react-navigation/native";
 import GestureHandlerRootView from "expo-dev-menu/mocks/react-native-gesture-handler/src";
+import {Stack} from "expo-router/stack";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -56,17 +56,12 @@ export default function RootLayout() {
     return null;
   }
 
-
   return (
     // <PaperProvider theme={paperTheme}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        {Platform.OS === "ios" ? (
-          <StatusBar style="auto" translucent={false} animated={true}/>
-        ) : (
-          <StatusBar style="auto" backgroundColor={paperTheme.colors.background} translucent={false}/>
-        )}
+    //   <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    //     <StatusBar networkActivityIndicatorVisible={false}/>
         <RootLayoutNav/>
-      </ThemeProvider>
+      // </ThemeProvider>
     // </PaperProvider>
   )
 }
@@ -81,12 +76,16 @@ function RootLayoutNav() {
   return (
     // <GestureHandlerRootView>
     <Stack>
-      <Stack.Screen name="index" options={{headerShown: false}}/>
+      <Stack.Screen name="index" options={{
+        headerShown: true,
+        headerLargeTitle: true,
+        headerTitle: "Bomboclat",
+        headerStyle: {backgroundColor: 'yellow'}
+      }}/>
       <Stack.Screen name="login" options={{
-        headerBackTitle: "Back",
-        headerTitle: "Login",
-        headerStyle,
-        headerTintColor: theme.colors.primary,
+        headerShown: true,
+        headerLargeTitle: true,
+        headerTitle: "Bomboclat",
       }}/>
       <Stack.Screen name="register" options={{
         headerBackTitle: "Back",

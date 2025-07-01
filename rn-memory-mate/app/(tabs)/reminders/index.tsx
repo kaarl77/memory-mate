@@ -18,6 +18,7 @@ import {
 } from "@/helpers/reminders-helpers";
 import {useReminders} from "@/helpers/use-reminders";
 import {SafeAreaView} from "react-native-safe-area-context";
+import Container from "@/components/Container";
 
 export default function index() {
   const [loading, setLoading] = useState(true);
@@ -65,82 +66,72 @@ export default function index() {
     }
   }, [session, isFocused]);
 
+
   return (
-    <View style={{backgroundColor: theme.colors.background, height:"100%"}}>
-      <ScrollView automaticallyAdjustKeyboardInsets={true} style={{
-        minHeight: "100%"
-      }}>
-          <View style={{
-            flexDirection:"column",
-            height:"100%",
-            paddingTop:30,
-            paddingHorizontal:24,
-            gap: 8
-          }}>
-            <Card>
-              <Card.Title title={"Title"}></Card.Title>
-              <Card.Content>
-                <Text>This is a test</Text>
-              </Card.Content>
-            </Card><Card>
-              <Card.Title title={"Title"}></Card.Title>
-              <Card.Content>
-                <Text>This is a test</Text>
-              </Card.Content>
-            </Card><Card>
-              <Card.Title title={"Title"}></Card.Title>
-              <Card.Content>
-                <Text>This is a test</Text>
-              </Card.Content>
-            </Card><Card>
-              <Card.Title title={"Title"}></Card.Title>
-              <Card.Content>
-                <Text>This is a test</Text>
-              </Card.Content>
-            </Card><Card>
-              <Card.Title title={"Title"}></Card.Title>
-              <Card.Content>
-                <Text>This is a test</Text>
-              </Card.Content>
-            </Card><Card>
-              <Card.Title title={"Title"}></Card.Title>
-              <Card.Content>
-                <Text>This is a test</Text>
-              </Card.Content>
-            </Card><Card>
-              <Card.Title title={"Title"}></Card.Title>
-              <Card.Content>
-                <Text>This is a test</Text>
-              </Card.Content>
-            </Card><Card>
-              <Card.Title title={"Title"}></Card.Title>
-              <Card.Content>
-                <Text>This is a test</Text>
-              </Card.Content>
-            </Card><Card>
-              <Card.Title title={"Title"}></Card.Title>
-              <Card.Content>
-                <Text>This is a test</Text>
-              </Card.Content>
-            </Card><Card>
-              <Card.Title title={"Title"}></Card.Title>
-              <Card.Content>
-                <Text>This is a test</Text>
-              </Card.Content>
-            </Card><Card>
-              <Card.Title title={"Title"}></Card.Title>
-              <Card.Content>
-                <Text>This is a test</Text>
-              </Card.Content>
-            </Card><Card>
-              <Card.Title title={"Title"}></Card.Title>
-              <Card.Content>
-                <Text>This is a test</Text>
-              </Card.Content>
-            </Card>
-          </View>
-      </ScrollView>
-    </View>
+    <Container >
+      <Text variant={"headlineLarge"}>Header</Text>
+      <Card>
+        <Card.Title title={"Title"}></Card.Title>
+        <Card.Content>
+          <Text>This is a test</Text>
+        </Card.Content>
+      </Card><Card>
+      <Card.Title title={"Title"}></Card.Title>
+      <Card.Content>
+        <Text>This is a test</Text>
+      </Card.Content>
+    </Card><Card>
+      <Card.Title title={"Title"}></Card.Title>
+      <Card.Content>
+        <Text>This is a test</Text>
+      </Card.Content>
+    </Card><Card>
+      <Card.Title title={"Title"}></Card.Title>
+      <Card.Content>
+        <Text>This is a test</Text>
+      </Card.Content>
+    </Card><Card>
+      <Card.Title title={"Title"}></Card.Title>
+      <Card.Content>
+        <Text>This is a test</Text>
+      </Card.Content>
+    </Card><Card>
+      <Card.Title title={"Title"}></Card.Title>
+      <Card.Content>
+        <Text>This is a test</Text>
+      </Card.Content>
+    </Card><Card>
+      <Card.Title title={"Title"}></Card.Title>
+      <Card.Content>
+        <Text>This is a test</Text>
+      </Card.Content>
+    </Card><Card>
+      <Card.Title title={"Title"}></Card.Title>
+      <Card.Content>
+        <Text>This is a test</Text>
+      </Card.Content>
+    </Card><Card>
+      <Card.Title title={"Title"}></Card.Title>
+      <Card.Content>
+        <Text>This is a test</Text>
+      </Card.Content>
+    </Card><Card>
+      <Card.Title title={"Title"}></Card.Title>
+      <Card.Content>
+        <Text>This is a test</Text>
+      </Card.Content>
+    </Card><Card>
+      <Card.Title title={"Title"}></Card.Title>
+      <Card.Content>
+        <Text>This is a test</Text>
+      </Card.Content>
+    </Card><Card>
+      <Card.Title title={"Title"}></Card.Title>
+      <Card.Content>
+        <Text>This is a test</Text>
+      </Card.Content>
+    </Card>
+    </Container>
 
   )
 

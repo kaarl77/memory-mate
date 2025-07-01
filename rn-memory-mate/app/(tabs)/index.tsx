@@ -45,45 +45,45 @@ export default function TabOneScreen() {
       <ScrollView style={styles.container} automaticallyAdjustKeyboardInsets={true}>
         <SafeAreaView>
           <View style={{
-            flexDirection:"column",
-            height:"100%"
+            flexDirection: "column",
+            height: "100%"
           }}>
-        <Spacer height={Spacings["3x"]}/>
-        <Text variant={"headlineSmall"}>Latest highlight</Text>
-        <Text variant={"titleLarge"} style={{color: theme.colors.outline}}>Check your latest journal entry</Text>
-        <Spacer height={Spacings["3x"]}/>
+            <Spacer height={Spacings["3x"]}/>
+            <Text variant={"headlineSmall"}>Latest highlight</Text>
+            <Text variant={"titleLarge"} style={{color: theme.colors.outline}}>Check your latest journal entry</Text>
+            <Spacer height={Spacings["3x"]}/>
 
-        <Card mode={"contained"}>
-          <Card.Title
-            title={yesterdaysLatestEntry?.title}
-            subtitle={getCardSubtitle(yesterdaysLatestEntry?.created_at, yesterdaysLatestEntry?.updated_at)}
-          />
-          <Card.Content>
-            <Text>{yesterdaysLatestEntry?.content}</Text>
-          </Card.Content>
-        </Card>
-        <Spacer height={Spacings["3x"]}/>
+            <Card mode={"contained"}>
+              <Card.Title
+                title={yesterdaysLatestEntry?.title}
+                subtitle={getCardSubtitle(yesterdaysLatestEntry?.created_at, yesterdaysLatestEntry?.updated_at)}
+              />
+              <Card.Content>
+                <Text>{yesterdaysLatestEntry?.content}</Text>
+              </Card.Content>
+            </Card>
+            <Spacer height={Spacings["3x"]}/>
 
-        <View style={separatorStyle}/>
-        <Spacer height={Spacings["3x"]}/>
-        <Text variant={"headlineSmall"}>Upcoming reminders</Text>
-        <Text variant={"titleLarge"} style={{color: theme.colors.outline}}>Check what is planned next</Text>
+            <View style={separatorStyle}/>
+            <Spacer height={Spacings["3x"]}/>
+            <Text variant={"headlineSmall"}>Upcoming reminders</Text>
+            <Text variant={"titleLarge"} style={{color: theme.colors.outline}}>Check what is planned next</Text>
 
-        <Spacer height={Spacings["3x"]}/>
+            <Spacer height={Spacings["3x"]}/>
 
-        {upcomingReminders.map((reminder, index) => (
-          <Card key={index} style={{marginHorizontal: 2}}>
-            <Card.Title
-              title={reminder.title}
-              subtitle={reminder.description}
-            />
-            <Card.Content>
-              <Text>Due: {new Date(reminder.due_date ?? '').toLocaleDateString(Intl.DateTimeFormat().resolvedOptions().locale, {
-                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-              })}</Text>
-            </Card.Content>
-          </Card>
-        ))}
+            {upcomingReminders.map((reminder, index) => (
+              <Card key={index} style={{marginHorizontal: 2}}>
+                <Card.Title
+                  title={reminder.title}
+                  subtitle={reminder.description}
+                />
+                <Card.Content>
+                  <Text>Due: {new Date(reminder.due_date ?? '').toLocaleDateString(Intl.DateTimeFormat().resolvedOptions().locale, {
+                    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+                  })}</Text>
+                </Card.Content>
+              </Card>
+            ))}
           </View>
         </SafeAreaView>
 
@@ -103,7 +103,7 @@ export default function TabOneScreen() {
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
-    minHeight:"100%",
+    minHeight: "100%",
     paddingHorizontal: Spacings["3x"],
     paddingBottom: Spacings["3x"],
   },
